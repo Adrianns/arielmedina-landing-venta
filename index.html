@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Suscribite y subí al siguiente nivel con tu iPhone</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/index.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/styles.css" />
+  <!-- Mailchimp script removed for public repo -->
+  <style>
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -100% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    .image-fade-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .image-fade-container::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 8%;
+      height: 40%;
+      background: linear-gradient(to bottom, 
+        rgba(0,0,0,0) 0%,
+        rgba(153, 0, 102, 0.2) 20%,
+        rgba(75, 0, 130, 0.4) 50%,
+        rgba(0, 0, 0, 1) 100%
+      );
+      pointer-events: none;
+      z-index: 11;
+    }
+
+    .gradient-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(80% 80% at 50% 50%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.9) 100%),
+        radial-gradient(circle at 30% 20%, rgba(153, 0, 102, 0.3), transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(0, 51, 102, 0.3), transparent 50%),
+        radial-gradient(circle at 90% 10%, rgba(75, 0, 130, 0.3), transparent 50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .animated-bg {
+      background: linear-gradient(
+        125deg,
+        #990066,
+        #4B0082,
+        #800000,
+        #003366,
+        #4B0082
+      );
+      background-size: 200% 200%;
+      animation: gradientAnimation 15s ease infinite;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      opacity: 0.8;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 2;
+      backdrop-filter: blur(50px);
+      -webkit-backdrop-filter: blur(50px);
+    }
+
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .golden-button {
+      background: transparent;
+      border: 2px solid;
+      border-image: linear-gradient(90deg, 
+        #8B7355,
+        #FCC201,
+        #FFDB58,
+        #FCC201,
+        #8B7355
+      ) 1;
+      color: #FCC201;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.5s ease;
+      z-index: 1;
+    }
+
+    .golden-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(252, 194, 1, 0.2),
+        transparent
+      );
+      transition: left 0.7s ease;
+      z-index: -1;
+    }
+
+    .golden-button:hover::before {
+      left: 100%;
+    }
+
+    .golden-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(252, 194, 1, 0.3);
+      color: #FFDB58;
+    }
+
+    @keyframes borderGlow {
+      0% {
+        box-shadow: 0 0 5px rgba(252, 194, 1, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(252, 194, 1, 0.5);
+      }
+      100% {
+        box-shadow: 0 0 5px rgba(252, 194, 1, 0.3);
+      }
+    }
+
+    .golden-button {
+      animation: borderGlow 3s infinite;
+    }
+
+    /* Estilos adicionales para los sliders */
+    img-comparison-slider {
+      --divider-width: 2px;
+      --divider-color: #FCC201;
+      --default-handle-color: #FCC201;
+      --default-handle-width: 40px;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .comparison-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    /* Estilos para las cards */
+    .card-slider {
+      position: relative;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    img-comparison-slider {
+      border-radius: 8px;
+      overflow: hidden;
+      max-width: 350px;
+      width: 100%;
+    }
+
+    .card-content {
+      margin-top: 1rem;
+    }
+
+    .main-image {
+      position: relative;
+      z-index: 10;
+    }
+
+    .image-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .initial-image {
+      position: relative;
+      mask-image: linear-gradient(to bottom, 
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,1) 60%,
+        rgba(0,0,0,0.8) 75%,
+        rgba(0,0,0,0.4) 85%,
+        rgba(0,0,0,0) 100%
+      );
+      -webkit-mask-image: linear-gradient(to bottom, 
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,1) 60%,
+        rgba(0,0,0,0.8) 75%,
+        rgba(0,0,0,0.4) 85%,
+        rgba(0,0,0,0) 100%
+      );
+    }
+
+    .fade-out {
+      opacity: 0;
+    }
+
+    .fade-in {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+  <!-- Animated Background -->
+  <div class="animated-bg"></div>
+  <div class="gradient-overlay"></div>
+  
+  <div class="content-wrapper min-h-screen">
+    <!-- Primera sección -->
+    <div class="container mx-auto px-4 py-8 md:py-16 relative">
+      <!-- Imagen solo en mobile -->
+      <div class="block lg:hidden mb-8 w-full flex items-center justify-center">
+        <div class="image-container relative">
+          <img
+            src="sinfondo.png"
+            alt="Ilustración inicial"
+            class="w-full h-auto max-h-[90vh] object-contain main-image initial-image"
+            id="initialImageMobile"
+          />
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center w-full">
+        <!-- Texto y formulario -->
+        <div class="space-y-6 max-w-xl order-2 lg:order-1">
+          <h1 class="text-4xl md:text-5xl font-bold leading-tight text-white">
+            📸 Fotografía PRO con tu iPhone
+          </h1>
+          <p class="text-lg text-gray-300 mb-6">
+            Todo lo que necesitás saber para capturar fotos increíbles, con la cámara que siempre llevás en el bolsillo.
+          </p>
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+            DOMINA TU IPHONE Y SACÁ FOTOS QUE IMPACTAN.
+          </h2>
+          <p class="text-lg text-gray-300 mb-6">
+            Descubrí las técnicas y secretos para lograr fotos profesionales, sin necesidad de cámaras caras o conocimientos complicados.
+          </p>
+          <p class="text-xl text-yellow-400 font-semibold mb-8">
+            +3.000 personas ya están aprendiendo a sacar el máximo provecho a su iPhone.
+          </p>
+          <div class="space-y-6 mb-8">
+            <h3 class="text-2xl font-bold text-white">EN MI CURSO VAS A APRENDER:</h3>
+            <div class="space-y-4">
+              <div class="flex items-start space-x-3">
+                <span class="text-green-400 text-xl">✅</span>
+                <div>
+                  <p class="text-white font-semibold">Trucos y ajustes ocultos que todo usuario de iPhone debería conocer.</p>
+                  <p class="text-gray-300">Convertí cada foto en una imagen que impacte, usando las herramientas que ya tenés en tu celular.</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3">
+                <span class="text-green-400 text-xl">✅</span>
+                <div>
+                  <p class="text-white font-semibold">Cómo componer y editar fotos para que parezcan de fotógrafo profesional.</p>
+                  <p class="text-gray-300">No es la cámara, es saber usarla. Te enseño a mirar, disparar y retocar como un PRO.</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3">
+                <span class="text-green-400 text-xl">✅</span>
+                <div>
+                  <p class="text-white font-semibold">El paso a paso para hacer que tus fotos destaquen en redes sociales.</p>
+                  <p class="text-gray-300">Transformá tus recuerdos en imágenes que la gente no pueda dejar de mirar.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Formulario de suscripción -->
+          <!--
+          <form class="space-y-4">
+            <select
+              required
+              class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/50 glass-effect text-white placeholder-gray-400 bg-transparent"
+            >
+              <option value="" disabled selected class="bg-black">Selecciona tu país</option>
+              <option value="AF" class="bg-black">Afganistán</option>
+              <option value="AL" class="bg-black">Albania</option>
+              <option value="DE" class="bg-black">Alemania</option>
+              <option value="AD" class="bg-black">Andorra</option>
+              <option value="AO" class="bg-black">Angola</option>
+              <option value="AI" class="bg-black">Anguila</option>
+              <option value="AQ" class="bg-black">Antártida</option>
+              <option value="AG" class="bg-black">Antigua y Barbuda</option>
+              <option value="SA" class="bg-black">Arabia Saudita</option>
+              <option value="DZ" class="bg-black">Argelia</option>
+              <option value="AR" class="bg-black">Argentina</option>
+              <option value="AM" class="bg-black">Armenia</option>
+              <option value="AW" class="bg-black">Aruba</option>
+              <option value="AU" class="bg-black">Australia</option>
+              <option value="AT" class="bg-black">Austria</option>
+              <option value="AZ" class="bg-black">Azerbaiyán</option>
+              <option value="BS" class="bg-black">Bahamas</option>
+              <option value="BD" class="bg-black">Bangladés</option>
+              <option value="BB" class="bg-black">Barbados</option>
+              <option value="BH" class="bg-black">Baréin</option>
+              <option value="BE" class="bg-black">Bélgica</option>
+              <option value="BZ" class="bg-black">Belice</option>
+              <option value="BJ" class="bg-black">Benín</option>
+              <option value="BM" class="bg-black">Bermudas</option>
+              <option value="BY" class="bg-black">Bielorrusia</option>
+              <option value="BO" class="bg-black">Bolivia</option>
+              <option value="BA" class="bg-black">Bosnia y Herzegovina</option>
+              <option value="BW" class="bg-black">Botsuana</option>
+              <option value="BR" class="bg-black">Brasil</option>
+              <option value="BN" class="bg-black">Brunéi</option>
+              <option value="BG" class="bg-black">Bulgaria</option>
+              <option value="BF" class="bg-black">Burkina Faso</option>
+              <option value="BI" class="bg-black">Burundi</option>
+              <option value="BT" class="bg-black">Bután</option>
+              <option value="CV" class="bg-black">Cabo Verde</option>
+              <option value="KH" class="bg-black">Camboya</option>
+              <option value="CM" class="bg-black">Camerún</option>
+              <option value="CA" class="bg-black">Canadá</option>
+              <option value="TD" class="bg-black">Chad</option>
+              <option value="CL" class="bg-black">Chile</option>
+              <option value="CN" class="bg-black">China</option>
+              <option value="CY" class="bg-black">Chipre</option>
+              <option value="CO" class="bg-black">Colombia</option>
+              <option value="KM" class="bg-black">Comoras</option>
+              <option value="CG" class="bg-black">Congo</option>
+              <option value="KP" class="bg-black">Corea del Norte</option>
+              <option value="KR" class="bg-black">Corea del Sur</option>
+              <option value="CI" class="bg-black">Costa de Marfil</option>
+              <option value="CR" class="bg-black">Costa Rica</option>
+              <option value="HR" class="bg-black">Croacia</option>
+              <option value="CU" class="bg-black">Cuba</option>
+              <option value="DK" class="bg-black">Dinamarca</option>
+              <option value="DM" class="bg-black">Dominica</option>
+              <option value="EC" class="bg-black">Ecuador</option>
+              <option value="EG" class="bg-black">Egipto</option>
+              <option value="SV" class="bg-black">El Salvador</option>
+              <option value="AE" class="bg-black">Emiratos Árabes Unidos</option>
+              <option value="ER" class="bg-black">Eritrea</option>
+              <option value="SK" class="bg-black">Eslovaquia</option>
+              <option value="SI" class="bg-black">Eslovenia</option>
+              <option value="ES" class="bg-black">España</option>
+              <option value="US" class="bg-black">Estados Unidos</option>
+              <option value="EE" class="bg-black">Estonia</option>
+              <option value="ET" class="bg-black">Etiopía</option>
+              <option value="PH" class="bg-black">Filipinas</option>
+              <option value="FI" class="bg-black">Finlandia</option>
+              <option value="FJ" class="bg-black">Fiyi</option>
+              <option value="FR" class="bg-black">Francia</option>
+              <option value="GA" class="bg-black">Gabón</option>
+              <option value="GM" class="bg-black">Gambia</option>
+              <option value="GE" class="bg-black">Georgia</option>
+              <option value="GH" class="bg-black">Ghana</option>
+              <option value="GI" class="bg-black">Gibraltar</option>
+              <option value="GD" class="bg-black">Granada</option>
+              <option value="GR" class="bg-black">Grecia</option>
+              <option value="GL" class="bg-black">Groenlandia</option>
+              <option value="GP" class="bg-black">Guadalupe</option>
+              <option value="GU" class="bg-black">Guam</option>
+              <option value="GT" class="bg-black">Guatemala</option>
+              <option value="GF" class="bg-black">Guayana Francesa</option>
+              <option value="GN" class="bg-black">Guinea</option>
+              <option value="GQ" class="bg-black">Guinea Ecuatorial</option>
+              <option value="GW" class="bg-black">Guinea-Bisáu</option>
+              <option value="GY" class="bg-black">Guyana</option>
+              <option value="HT" class="bg-black">Haití</option>
+              <option value="HN" class="bg-black">Honduras</option>
+              <option value="HK" class="bg-black">Hong Kong</option>
+              <option value="HU" class="bg-black">Hungría</option>
+              <option value="IN" class="bg-black">India</option>
+              <option value="ID" class="bg-black">Indonesia</option>
+              <option value="IQ" class="bg-black">Irak</option>
+              <option value="IR" class="bg-black">Irán</option>
+              <option value="IE" class="bg-black">Irlanda</option>
+              <option value="BV" class="bg-black">Isla Bouvet</option>
+              <option value="IS" class="bg-black">Islandia</option>
+              <option value="IL" class="bg-black">Israel</option>
+              <option value="IT" class="bg-black">Italia</option>
+              <option value="JM" class="bg-black">Jamaica</option>
+              <option value="JP" class="bg-black">Japón</option>
+              <option value="JO" class="bg-black">Jordania</option>
+              <option value="KZ" class="bg-black">Kazajistán</option>
+              <option value="KE" class="bg-black">Kenia</option>
+              <option value="KG" class="bg-black">Kirguistán</option>
+              <option value="KI" class="bg-black">Kiribati</option>
+              <option value="KW" class="bg-black">Kuwait</option>
+              <option value="LA" class="bg-black">Laos</option>
+              <option value="LS" class="bg-black">Lesoto</option>
+              <option value="LV" class="bg-black">Letonia</option>
+              <option value="LB" class="bg-black">Líbano</option>
+              <option value="LR" class="bg-black">Liberia</option>
+              <option value="LY" class="bg-black">Libia</option>
+              <option value="LI" class="bg-black">Liechtenstein</option>
+              <option value="LT" class="bg-black">Lituania</option>
+              <option value="LU" class="bg-black">Luxemburgo</option>
+              <option value="MO" class="bg-black">Macao</option>
+              <option value="MK" class="bg-black">Macedonia del Norte</option>
+              <option value="MG" class="bg-black">Madagascar</option>
+              <option value="MY" class="bg-black">Malasia</option>
+              <option value="MW" class="bg-black">Malaui</option>
+              <option value="MV" class="bg-black">Maldivas</option>
+              <option value="ML" class="bg-black">Malí</option>
+              <option value="MT" class="bg-black">Malta</option>
+              <option value="MA" class="bg-black">Marruecos</option>
+              <option value="MQ" class="bg-black">Martinica</option>
+              <option value="MU" class="bg-black">Mauricio</option>
+              <option value="MR" class="bg-black">Mauritania</option>
+              <option value="YT" class="bg-black">Mayotte</option>
+              <option value="MX" class="bg-black">México</option>
+              <option value="FM" class="bg-black">Micronesia</option>
+              <option value="MD" class="bg-black">Moldavia</option>
+              <option value="MC" class="bg-black">Mónaco</option>
+              <option value="MN" class="bg-black">Mongolia</option>
+              <option value="ME" class="bg-black">Montenegro</option>
+              <option value="MS" class="bg-black">Montserrat</option>
+              <option value="MZ" class="bg-black">Mozambique</option>
+              <option value="MM" class="bg-black">Myanmar</option>
+              <option value="NA" class="bg-black">Namibia</option>
+              <option value="NR" class="bg-black">Nauru</option>
+              <option value="NP" class="bg-black">Nepal</option>
+              <option value="NI" class="bg-black">Nicaragua</option>
+              <option value="NE" class="bg-black">Níger</option>
+              <option value="NG" class="bg-black">Nigeria</option>
+              <option value="NU" class="bg-black">Niue</option>
+              <option value="NO" class="bg-black">Noruega</option>
+              <option value="NC" class="bg-black">Nueva Caledonia</option>
+              <option value="NZ" class="bg-black">Nueva Zelanda</option>
+              <option value="OM" class="bg-black">Omán</option>
+              <option value="NL" class="bg-black">Países Bajos</option>
+              <option value="PK" class="bg-black">Pakistán</option>
+              <option value="PW" class="bg-black">Palaos</option>
+              <option value="PS" class="bg-black">Palestina</option>
+              <option value="PA" class="bg-black">Panamá</option>
+              <option value="PG" class="bg-black">Papúa Nueva Guinea</option>
+              <option value="PY" class="bg-black">Paraguay</option>
+              <option value="PE" class="bg-black">Perú</option>
+              <option value="PF" class="bg-black">Polinesia Francesa</option>
+              <option value="PL" class="bg-black">Polonia</option>
+              <option value="PT" class="bg-black">Portugal</option>
+              <option value="PR" class="bg-black">Puerto Rico</option>
+              <option value="QA" class="bg-black">Qatar</option>
+              <option value="GB" class="bg-black">Reino Unido</option>
+              <option value="CF" class="bg-black">República Centroafricana</option>
+              <option value="CZ" class="bg-black">República Checa</option>
+              <option value="DO" class="bg-black">República Dominicana</option>
+              <option value="RE" class="bg-black">Reunión</option>
+              <option value="RW" class="bg-black">Ruanda</option>
+              <option value="RO" class="bg-black">Rumanía</option>
+              <option value="RU" class="bg-black">Rusia</option>
+              <option value="EH" class="bg-black">Sahara Occidental</option>
+              <option value="WS" class="bg-black">Samoa</option>
+              <option value="AS" class="bg-black">Samoa Americana</option>
+              <option value="BL" class="bg-black">San Bartolomé</option>
+              <option value="KN" class="bg-black">San Cristóbal y Nieves</option>
+              <option value="SM" class="bg-black">San Marino</option>
+              <option value="MF" class="bg-black">San Martín</option>
+              <option value="PM" class="bg-black">San Pedro y Miquelón</option>
+              <option value="VC" class="bg-black">San Vicente y las Granadinas</option>
+              <option value="SH" class="bg-black">Santa Elena</option>
+              <option value="LC" class="bg-black">Santa Lucía</option>
+              <option value="ST" class="bg-black">Santo Tomé y Príncipe</option>
+              <option value="SN" class="bg-black">Senegal</option>
+              <option value="RS" class="bg-black">Serbia</option>
+              <option value="SC" class="bg-black">Seychelles</option>
+              <option value="SL" class="bg-black">Sierra Leona</option>
+              <option value="SG" class="bg-black">Singapur</option>
+              <option value="SY" class="bg-black">Siria</option>
+              <option value="SO" class="bg-black">Somalia</option>
+              <option value="LK" class="bg-black">Sri Lanka</option>
+              <option value="SZ" class="bg-black">Suazilandia</option>
+              <option value="ZA" class="bg-black">Sudáfrica</option>
+              <option value="SD" class="bg-black">Sudán</option>
+              <option value="SS" class="bg-black">Sudán del Sur</option>
+              <option value="SE" class="bg-black">Suecia</option>
+              <option value="CH" class="bg-black">Suiza</option>
+              <option value="SR" class="bg-black">Surinam</option>
+              <option value="TH" class="bg-black">Tailandia</option>
+              <option value="TW" class="bg-black">Taiwán</option>
+              <option value="TZ" class="bg-black">Tanzania</option>
+              <option value="TJ" class="bg-black">Tayikistán</option>
+              <option value="TL" class="bg-black">Timor Oriental</option>
+              <option value="TG" class="bg-black">Togo</option>
+              <option value="TK" class="bg-black">Tokelau</option>
+              <option value="TO" class="bg-black">Tonga</option>
+              <option value="TT" class="bg-black">Trinidad y Tobago</option>
+              <option value="TN" class="bg-black">Túnez</option>
+              <option value="TM" class="bg-black">Turkmenistán</option>
+              <option value="TR" class="bg-black">Turquía</option>
+              <option value="TV" class="bg-black">Tuvalu</option>
+              <option value="UA" class="bg-black">Ucrania</option>
+              <option value="UG" class="bg-black">Uganda</option>
+              <option value="UY" class="bg-black">Uruguay</option>
+              <option value="UZ" class="bg-black">Uzbekistán</option>
+              <option value="VU" class="bg-black">Vanuatu</option>
+              <option value="VA" class="bg-black">Vaticano</option>
+              <option value="VE" class="bg-black">Venezuela</option>
+              <option value="VN" class="bg-black">Vietnam</option>
+              <option value="WF" class="bg-black">Wallis y Futuna</option>
+              <option value="YE" class="bg-black">Yemen</option>
+              <option value="DJ" class="bg-black">Yibuti</option>
+              <option value="ZM" class="bg-black">Zambia</option>
+              <option value="ZW" class="bg-black">Zimbabue</option>
+            </select>
+            
+            <input
+              type="email"
+              placeholder="Ingresá tu email"
+              class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/50 glass-effect text-white placeholder-gray-400"
+              required
+            />
+
+            <div class="relative">
+              <input
+                type="tel"
+                placeholder="WhatsApp (con código de país)"
+                pattern="^\+[0-9]{1,4}[0-9]{6,}$"
+                class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/50 glass-effect text-white placeholder-gray-400"
+                required
+                title="Ingresa tu número con código de país, ejemplo: +54911xxxxxxxx"
+              />
+              <span class="absolute text-gray-400 text-sm right-3 top-1/2 transform -translate-y-1/2">
+                Ej: +54911xxxxxxxx
+              </span>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full sm:w-auto golden-button px-8 py-3 rounded-lg font-medium text-base relative overflow-hidden backdrop-blur-sm"
+            >
+              📲 Suscribite ahora
+            </button>
+          </form>
+          <p class="text-sm text-gray-400">
+            Dale clic al botón y empezá a sacar fotos como siempre soñaste, ¡con tu iPhone y sin complicarte!
+          </p>
+        </div>
+
+        <!-- Imagen de ilustración solo en desktop -->
+        <div class="hidden lg:flex lg:absolute lg:right-0 lg:top-1/2 lg:transform lg:-translate-y-1/2 lg:w-1/2 xl:w-3/5 order-1 lg:order-2 items-center justify-center lg:h-full">
+          <div class="image-container relative">
+            <img
+              src="sinfondo.png"
+              alt="Ilustración inicial"
+              class="w-full h-auto max-h-[90vh] object-contain lg:object-cover lg:pr-8 main-image initial-image"
+              id="initialImageDesktop"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Segunda sección - Cards -->
+    <div class="container mx-auto px-4 py-16 relative z-20" id="secondSection">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">¿Aún no te convenciste? 🤔</h2>
+        <p class="text-xl text-gray-300">Mirá todo lo que vas a aprender en este curso exclusivo</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="glass-effect p-8 rounded-xl">
+          <div class="card-slider">
+            <img-comparison-slider class="rounded-xl">
+              <img slot="first" class="comparison-image" src="WhatsApp Image 2025-04-27 at 13.30.18 (1).jpeg" alt="Antes de aplicar composición" />
+              <img slot="second" class="comparison-image" src="WhatsApp Image 2025-04-27 at 13.30.18.jpeg" alt="Después de aplicar composición" />
+            </img-comparison-slider>
+          </div>
+          <div class="card-content">
+            <h3 class="text-white font-semibold text-xl mb-4">Composición mejorada</h3>
+            <p class="text-gray-300">Aprendé a usar la regla de los tercios y otros principios de composición para crear fotos más impactantes. Descubrí cómo transformar escenas cotidianas en fotografías memorables.</p>
+          </div>
+        </div>
+
+        <div class="glass-effect p-8 rounded-xl">
+          <div class="card-slider">
+            <img-comparison-slider class="rounded-xl">
+              <img slot="first" class="comparison-image" src="WhatsApp Image 2025-05-02 at 01.17.55 (1).jpeg" alt="Antes de controlar iluminación" />
+              <img slot="second" class="comparison-image" src="WhatsApp Image 2025-05-02 at 01.17.55.jpeg" alt="Después de controlar iluminación" />
+            </img-comparison-slider>
+          </div>
+          <div class="card-content">
+            <h3 class="text-white font-semibold text-xl mb-4">Control de iluminación</h3>
+            <p class="text-gray-300">Descubrí cómo aprovechar la luz natural y artificial para crear fotos con ambiente profesional. Dominá las técnicas de exposición y balance para lograr resultados increíbles.</p>
+          </div>
+        </div>
+
+        <div class="glass-effect p-8 rounded-xl">
+          <div class="card-slider">
+            <img-comparison-slider class="rounded-xl">
+              <img slot="first" class="comparison-image" src="WhatsApp Image 2025-04-27 at 13.30.46 (1).jpeg" alt="Antes de edición" />
+              <img slot="second" class="comparison-image" src="WhatsApp Image 2025-04-27 at 13.30.46.jpeg" alt="Después de edición" />
+            </img-comparison-slider>
+          </div>
+          <div class="card-content">
+            <h3 class="text-white font-semibold text-xl mb-4">Edición profesional</h3>
+            <p class="text-gray-300">Aprendé a usar las herramientas de edición nativas del iPhone para lograr resultados profesionales. Convertí tus fotos buenas en extraordinarias con ajustes precisos.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+    <!--   <div class="text-center mt-12">
+        <button onclick="document.querySelector('form').scrollIntoView({behavior: 'smooth'})" class="golden-button px-8 py-3 rounded-lg font-medium text-base relative overflow-hidden backdrop-blur-sm">
+          📸 ¡Quiero aprender a hacer esto!
+        </button>
+      </div> -->
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Script eliminado
+    });
+  </script>
+</body>
+</html>
