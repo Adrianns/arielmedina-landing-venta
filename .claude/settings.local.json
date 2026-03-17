@@ -2,7 +2,18 @@
   "permissions": {
     "allow": [
       "Bash(git rm:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(git commit:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://raw.githubusercontent.com/Adrianns/arielmedina-landing-venta/main/sinfondo.png\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://raw.githubusercontent.com/Adrianns/arielmedina-landing-venta/main/WhatsApp%20Image%202025-04-27%20at%2013.30.18%20%281%29.jpeg\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://raw.githubusercontent.com/Adrianns/arielmedina-landing-venta/main/WhatsApp%20Image%202025-04-27%20at%2013.30.18.jpeg\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://raw.githubusercontent.com/Adrianns/arielmedina-landing-venta/main/WhatsApp%20Image%202025-05-02%20at%2001.17.55%20%281%29.jpeg\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://raw.githubusercontent.com/Adrianns/arielmedina-landing-venta/main/WhatsApp%20Image%202025-05-02%20at%2001.17.55.jpeg\")",
+      "WebFetch(domain:developer.systeme.io)",
+      "WebFetch(domain:arielmedina-landing-venta.vercel.app)",
+      "Bash(curl:*)",
+      "Bash(git mv:*)",
+      "Bash(git add:*)"
     ]
   }
 }
